@@ -16,18 +16,30 @@ class BooksApp extends React.Component {
     })
   }
 
+  changeShelf = (book, shelf) => {
+    let bk = this.state.books.filter((b) => b !== book)
+    book.shelf = shelf
+    bk.push(book)
+
+    BooksAPI.update(book, shelf).then(() => {
+      this.setState(( state ) => ({
+        books: bk
+      }))
+    })
+  }
+
   render() {
-    const { books } = this.state // simplifica variavel para não precisar usar sempre o this.state
+    const { books, booksSearch } = this.state // simplifica variavel para não precisar usar sempre o this.state
 
     // CRIA VARIAVEL DE ACORDO COM O FILTRO
-    let currentlyReading = books.filter((book) => book.shelf === 'currentlyReading')
-    let wantToRead = books.filter((book) => book.shelf === 'wantToRead')
-    let read = books.filter((book) => book.shelf === 'read')
+    const currentlyReading = books.filter((book) => book.shelf === 'currentlyReading')
+    const wantToRead = books.filter((book) => book.shelf === 'wantToRead')
+    const read = books.filter((book) => book.shelf === 'read')
 
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
-          <SearchBooks />
+          <SearchBooks books={ books } search={ booksSearch } />
         )} />
 
         <Route exact path="/" render={() => (
@@ -36,9 +48,10 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <BookShelf category={ 'Currently Reading' } books={ currentlyReading }/>
-              <BookShelf category={ 'Wait to Reading' } books={ wantToRead }/>
-              <BookShelf category={ 'Read' } books={ read }/>            </div>
+              <BookShelf category={ 'Currently Reading' } books={ currentlyReading } changeShelf={this.changeShelf}/>
+              <BookShelf category={ 'Want to Reading' } books={ wantToRead } changeShelf={this.changeShelf}/>
+              <BookShelf category={ 'Read' } books={ read } changeShelf={this.changeShelf}/>
+            </div>
           </div>
         )} />
 
