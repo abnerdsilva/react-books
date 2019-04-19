@@ -21,6 +21,8 @@ class SearchBooks extends Component {
             showingBooks = []
         }
 
+        const { changeShelf } = this.props
+
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -38,7 +40,7 @@ class SearchBooks extends Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        <ListBooks books={ showingBooks } />
+                        <ListBooks books={ showingBooks } changeShelf={ changeShelf } />
                     </ol>
                 </div>
             </div>
