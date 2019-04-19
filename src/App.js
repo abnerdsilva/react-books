@@ -22,14 +22,14 @@ class BooksApp extends React.Component {
     bk.push(book)
 
     BooksAPI.update(book, shelf).then(() => {
-      this.setState(( state ) => ({
+      this.setState((  ) => ({
         books: bk
       }))
     })
   }
-
+  
   render() {
-    const { books, booksSearch } = this.state // simplifica variavel para não precisar usar sempre o this.state
+    const { books } = this.state // simplifica variavel para não precisar usar sempre o this.state
 
     // CRIA VARIAVEL DE ACORDO COM O FILTRO
     const currentlyReading = books.filter((book) => book.shelf === 'currentlyReading')
@@ -39,7 +39,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
-          <SearchBooks books={ books } search={ booksSearch } />
+          <SearchBooks books={ books } changeShelf={ this.changeShelf } />
         )} />
 
         <Route exact path="/" render={() => (
