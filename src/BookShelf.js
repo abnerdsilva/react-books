@@ -13,7 +13,6 @@ class BookShelf extends Component {
           <ListBooks books={ books } changeShelf={ changeShelf } />
         </div>
         
-
         <div className="open-search">
           <Link
             to='/search'
